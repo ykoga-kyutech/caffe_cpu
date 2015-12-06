@@ -32,9 +32,9 @@ RUN cd /opt/caffe && \
   make all -j$(nproc) && \
   make test -j$(nproc)
 
-# Add ld-so.conf so it can find libcaffe.so
+# Get ld-so.conf so it can find libcaffe.so
 RUN wget https://raw.githubusercontent.com/ruffsl/ros_caffe/master/docker/caffe/caffe-ld-so.conf
-ADD caffe-ld-so.conf /etc/ld.so.conf.d/
+RUN mv caffe-ld-so.conf /etc/ld.so.conf.d/
 
 # Run ldconfig again (not sure if needed)
 RUN ldconfig
