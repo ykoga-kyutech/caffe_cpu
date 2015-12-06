@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -q -y \
   liblmdb-dev \
   libatlas-base-dev \
   python-dev \
+  wget \
   && rm -rf /var/lib/apt/lists/*
 
 # Clone the Caffe repo
@@ -32,6 +33,7 @@ RUN cd /opt/caffe && \
   make test -j$(nproc)
 
 # Add ld-so.conf so it can find libcaffe.so
+RUN wget https://raw.githubusercontent.com/ruffsl/ros_caffe/master/docker/caffe/caffe-ld-so.conf
 ADD caffe-ld-so.conf /etc/ld.so.conf.d/
 
 # Run ldconfig again (not sure if needed)
